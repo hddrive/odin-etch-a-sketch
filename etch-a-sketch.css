@@ -1,0 +1,9 @@
+.grid {
+  border: 1px solid black;
+  width: 200px;
+  height: auto;
+}
+
+.pixel {
+  border: 1px solid black;
+}
