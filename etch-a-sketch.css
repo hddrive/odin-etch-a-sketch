@@ -1,9 +1,25 @@
 .grid {
+  --grid-column-count: 16;
+  --grid-column-size: 6.25%;
+
   border: 1px solid black;
-  width: 200px;
-  height: auto;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-column-count), var(--grid-column-size));
 }
 
-.pixel {
-  border: 1px solid black;
+/* .pixel {
+  grid-column: initial;
+} */
+
+.reset {
+  height: 48px;
+  width: 240px;
+  text-align: center;
+  font-size: 32px;
+  display: grid;
+  margin: auto;
 }
+

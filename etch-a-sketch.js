@@ -66,7 +66,7 @@
 //      Create and class button for resetting
 //      
 
-let gridSize = 16;
+let gridSize = 16**2;
 const grid = document.querySelector(".grid");
 
 function createGrid (gridSize) {
@@ -74,15 +74,15 @@ function createGrid (gridSize) {
         let div = document.createElement("div");
         grid.appendChild(div);        
         div.classList.add("pixel");
-        div.textContent = "hey";
+        // div.textContent = "hey";
     }
 }
 
 // Grabs all pixel divs and applies an eventlistener to each one using a for loop instead of the forEach method
 function applyButtonEventListener () {
-    const pixel = document.querySelectorAll(".pixel");
+    const pixels = document.querySelectorAll(".pixel");
     for (let i = 0; i < gridSize; i++) {
-        pixel[i].addEventListener("mouseenter", function (event) {
+        pixels[i].addEventListener("mouseenter", function (event) {
             event.target.style.backgroundColor = "blue";
         })
     }
@@ -93,17 +93,21 @@ const reset = document.querySelector(".reset");
 
 applyButtonEventListener();
 
+
 reset.addEventListener('click', () => {
-    gridSize = prompt("Please enter a new size between 1 and 100");
+    gridSize = prompt("Please enter a new size between 1 and 100")**2;
+    console.log(gridSize);
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild);
     }
     createGrid(gridSize);
     applyButtonEventListener();
+    grid.style.setProperty("--grid-column-count", Math.sqrt(gridSize));
+    grid.style.setProperty("--grid-column-size", (100/Math.sqrt(gridSize)) + "%")
 })
 
+// grid.style.setProperty("--grid-column-count", Math.sqrt(gridSize));
 
 
-// try replace children function
 
-
+// using min-width or height, access grids height and width and make the divs size relative to that in relation to the amount of divs
