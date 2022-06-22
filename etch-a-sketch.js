@@ -95,15 +95,19 @@ applyButtonEventListener();
 
 
 reset.addEventListener('click', () => {
-    gridSize = prompt("Please enter a new size between 1 and 100")**2;
-    console.log(gridSize);
+    let trueSize;
+    do {
+        gridSize = parseInt(prompt("Please enter a new size between 1 and 100"));
+        console.log(gridSize);
+    } while (gridSize < 1 || gridSize > 100);
+
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild);
     }
-    createGrid(gridSize);
+    createGrid(gridSize ** 2);
     applyButtonEventListener();
-    grid.style.setProperty("--grid-column-count", Math.sqrt(gridSize));
-    grid.style.setProperty("--grid-column-size", (100/Math.sqrt(gridSize)) + "%")
+    grid.style.setProperty("--grid-column-count", gridSize);
+    grid.style.setProperty("--grid-column-size", (100/gridSize) + "%")
 })
 
 // grid.style.setProperty("--grid-column-count", Math.sqrt(gridSize));
