@@ -1,18 +1,17 @@
 .grid {
+  /* Default variables for grid size and div size */
   --grid-column-count: 16;
   --grid-column-size: 6.25%;
 
   border: 1px solid black;
   width: 400px;
   height: 400px;
+  /* Auto margin centers the .grid on the screen */
   margin: auto;
   display: grid;
+  /* Sets the track number(--grid-column-count) and the size of each columns width */
   grid-template-columns: repeat(var(--grid-column-count), var(--grid-column-size));
 }
-
-/* .pixel {
-  grid-column: initial;
-} */
 
 .reset {
   height: 48px;
@@ -20,6 +19,6 @@
   text-align: center;
   font-size: 32px;
   display: grid;
-  margin: auto;
+  margin: 24px auto;
 }
 

@@ -1,14 +1,18 @@
+// Short description of the task
+// 
 // Create 16x16 grid of square divs 
 //     Create in javascript as the user will need to choose the size
 // place these squares in a "container"
 // Choose a method or mix and match to make the grid
-
 // Use a hover effect so grid changes color as mouse passes over leaving a trail like a pen 
 // Button to prompt user for size of grid up to 100 max 
 //     the size of the grid will still use the same amount of pixels
- 
+// Optional
+//  Try changing the colors to a random color then try to get the color to change
+//  by a small percentage(10% as a good place to start) until it is fully colored in
+// 
 // Understand. Plan, Research. Pseudocode. Divide. Debug, Reassess, Research.
-
+// 
 // Understanding, Research
 //  JS
 //      I need a grid of square divs in a 16x16 size(default size). I am assuming that 
@@ -34,47 +38,50 @@
 
 // Pseudocode
 //  JS
-//      Set grid size default to 16
-//      Select container div
-//      For each div in grid size
-//          create div
-//          append div to parent div element
-//          add class of grid to div
-//      Add event listener for hover over divs, changes stay
-//      Add event listener for grid size button
-//      Create prompt for grid size button event listener
-//      Add reset of hover effect after prompt is accepted by user
-//      Get grid size when button is pressed
-//      Update grid size the new size
+//      x  Set grid size default to 16
+//      x  Select container div
+//      x  For each div in grid size
+//          x  create div
+//          x  append div to parent div element
+//          x  add class of grid to div
+//      x  F Add event listener for hover over divs, changes stay
+//      x  F Add event listener for grid-size button
+//      x  f Create prompt for grid-size button event listener
+//      x  Add reset of hover effect after prompt is accepted by user
+//         L->  Delete all the old divs
+//      x  Get grid size when button is pressed
+//      x  Update grid size the new size
 //          
 //  CSS
-//      Set height and width of div container
-//      Set border of div container
-//      Create grid using grid methods
-//      Set hover for grid divs
-//      Set color change for hover
-//      Set grid divs box to 0 all around
-//      Set grid divs to be relative to parent div size
-//      Set grid size button size
-//      Set grid size button corner roundness
-//      Set grid size button location
-//      Set button type to button
-//      Set transition of divs to .5 s
+//      x  Set height and width of div container
+//      x  Set border of div container
+//      x  Create grid using grid methods
+//      --n/a  Set hover for grid divs 
+//      x  Set color change for hover
+//      x  Set grid div margin to auto
+//      x  Set grid divs to be relative to parent div size
+//      x  Set grid-size button size
+//      -- n/a  Set grid-size button corner roundness
+//      x  Set grid-size button location
+//      x  Set button type to button
+//      --n/a  Set transition of divs to .5 s
 //      
 //  HTML
-//      Create div container for grid divs
-//      Create and class button for resetting
-//      
+//      x  Create div container for grid divs
+//      x  Create and class button for resetting
+//      x  Add script tag to end of body
+//      x  Add link for CSS
 
+// Default grid size
 let gridSize = 16**2;
 const grid = document.querySelector(".grid");
 
+// Creates divs for grid. Adds them to the grid and adds a class of pixel to them
 function createGrid (gridSize) {
     for (let i = 0; i < gridSize; i++) {
         let div = document.createElement("div");
         grid.appendChild(div);        
         div.classList.add("pixel");
-        // div.textContent = "hey";
     }
 }
 
@@ -82,36 +89,40 @@ function createGrid (gridSize) {
 function applyButtonEventListener () {
     const pixels = document.querySelectorAll(".pixel");
     for (let i = 0; i < gridSize; i++) {
+        // Added in loop so shader is applied to each pixel div
+        let shader = .1;
         pixels[i].addEventListener("mouseenter", function (event) {
-            event.target.style.backgroundColor = "blue";
+            // Used rgba to set shade of the color instead of color name
+            event.target.style.backgroundColor = `rgba(0, 0, 0, ${shader})`;
+            // Updating shader is added to the eventListener function so it applies to each pixel seperately
+            if (shader < 1) {
+                // Convert operation to string to one decimal place, then convert it back to number and update string
+                shader = Number((shader + .1).toFixed(1));
+            }
         })
     }
 }
 
+// Initial grid creations
 createGrid(gridSize);
-const reset = document.querySelector(".reset");
-
+// Initial button listener
 applyButtonEventListener();
 
-
+const reset = document.querySelector(".reset");
+// Adds listener to button when clicked. Gets the size of new grid, removes all the old divs, creates new grid, applies button listener to all new divs
+//  and sets the CSS variables to the new input value
 reset.addEventListener('click', () => {
-    let trueSize;
+    let getSize;
     do {
-        gridSize = parseInt(prompt("Please enter a new size between 1 and 100"));
-        console.log(gridSize);
-    } while (gridSize < 1 || gridSize > 100);
+        getSize = parseInt(prompt("Please enter a new size between 1 and 100"));
+        gridSize = getSize ** 2;
+    } while (getSize < 1 || getSize > 100);
 
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild);
     }
-    createGrid(gridSize ** 2);
+    createGrid(gridSize);
     applyButtonEventListener();
-    grid.style.setProperty("--grid-column-count", gridSize);
-    grid.style.setProperty("--grid-column-size", (100/gridSize) + "%")
+    grid.style.setProperty("--grid-column-count", getSize);
+    grid.style.setProperty("--grid-column-size", (100/getSize) + "%")
 })
-
-// grid.style.setProperty("--grid-column-count", Math.sqrt(gridSize));
-
-
-
-// using min-width or height, access grids height and width and make the divs size relative to that in relation to the amount of divs
